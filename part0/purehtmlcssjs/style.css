@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  /* border: 0.01vmin solid lime; */
+}
+
+body {
+  background-color: #161616;
+}
+
+div {
+  margin: 5vmin auto;
+  width: 80vmin;
+}
+
+#main-container {
+  margin: 8vmin auto;
+}
+
+input, button {
+  height: 3vmin;
+}
+
+input {
+  width: 65vmin;
+  padding: 0.5vmin;
+}
+
+button {
+  width: 15vmin;
+}
+
+h2,
+p,
+th {
+  color: white;
+}
+
+h2,
+p {
+  text-align: center;
+}
+
+h2 {
+  font-family: "montserrat light";
+  font-variant: small-caps;
+  font-size: 6vmin;
+}
+
+p {
+  font-family: "montserrat extralight";
+  font-size: 1.5vmin;
+}
+
+a {
+  color: aqua;
+}
+
+a:visited {
+  color: rgb(161, 161, 161);
+}
+
+a:hover {
+  color: crimson;
+}
+
+th {
+  font-family: "calibri light";
+  font-size: 2.5vmin;
+  border-bottom: 0.2vmin solid white;
+}
+
+td {
+  font-family: "calibri";
+  font-size: 2vmin;
+  border-bottom: 0.1vmin solid grey;
+  padding: 1vmin 2vmin;
+}
+
+td:first-child {
+  color: aqua;
+  text-align: center;
+  width: 20vmin;
+}
+
+td:nth-child(2) {
+  color: rgb(240, 240, 240);
+}
