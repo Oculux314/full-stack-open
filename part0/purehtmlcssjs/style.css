@@ -5,12 +5,18 @@
   /* border: 0.01vmin solid lime; */
 }
 
+html {
+  font-family: "calibri", sans-serif;
+  font-size: 2vmin;
+}
+
 body {
   background-color: #161616;
 }
 
 div {
   margin: 5vmin auto;
+  padding: auto;
   width: 80vmin;
 }
 
@@ -19,16 +25,21 @@ div {
 }
 
 input, button {
-  height: 3vmin;
+  height: 4vmin;
+  font-size: 2vmin;
+  border: 0.01vmin solid grey;
 }
 
 input {
   width: 65vmin;
-  padding: 0.5vmin;
+  padding: 0.5vmin 0.8vmin;
+  border-radius: 1vmin 0vmin 0vmin 1vmin;
 }
 
 button {
   width: 15vmin;
+  background-color: aqua;
+  border-radius: 0vmin 1vmin 1vmin 0vmin;
 }
 
 h2,
@@ -72,8 +83,6 @@ th {
 }
 
 td {
-  font-family: "calibri";
-  font-size: 2vmin;
   border-bottom: 0.1vmin solid grey;
   padding: 1vmin 2vmin;
 }
