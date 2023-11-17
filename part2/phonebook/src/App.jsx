@@ -1,44 +1,66 @@
-import { useState } from "react";
-import { SearchSection } from "./Components/SearchSection";
-import { AddSection } from "./Components/AddSection";
-import { ListSection } from "./Components/ListSection";
+import { useEffect, useState } from "react";
+import server from "./services/server";
+import SearchSection from "./components/SearchSection";
+import AncSection from "./components/AncSection";
+import ListSection from "./components/ListSection";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456", id: 1 },
-    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
-    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
-    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [input, setInput] = useState({ name: "", number: "" });
+  const [inputPerson, setInputPerson] = useState({ name: "", number: "" });
 
-  const handleSearchChange = (event) => {
+  useEffect(() => {
+    server.getAll().then((persons) => {
+      setPersons(persons);
+    });
+  }, []);
+
+  function handleSearchChange(event) {
     setSearchValue(event.target.value);
-  };
+  }
 
-  const handleNameChange = (event) => {
-    setInput({ ...input, name: event.target.value });
-  };
-
-  const handleNumberChange = (event) => {
-    setInput({ ...input, number: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (persons.some((person) => person.name === input.name)) {
-      alert(`${input.name} is already added to phonebook`);
-    } else {
-      setPersons([...persons, input]);
-      setInput({ name: "", number: "" });
+  function handleDelete(name) {
+    if (confirm(`Delete ${name}?`)) {
+      const note = persons.find((person) => person.name === name);
+      server.remove(note.id).then((response) => {
+        setPersons(persons.filter((person) => person.name !== note.name));
+      });
     }
-  };
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (persons.some((person) => person.name === inputPerson.name)) {
+      if (
+        confirm(
+          `${inputPerson.name} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const note = persons.find((person) => person.name === inputPerson.name);
+        server.update(note.id, inputPerson).then((updatedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== note.id ? person : updatedPerson
+            )
+          );
+        });
+      }
+    } else {
+      server.create(inputPerson).then((newPerson) => {
+        setPersons([...persons, newPerson]);
+      });
+    }
+    setInputPerson({ name: "", number: "" });
+  }
 
   const addSectionVariables = {
-    inputValues: input,
-    onNameChange: handleNameChange,
-    onNumberChange: handleNumberChange,
+    inputValues: inputPerson,
+    onNameChange: (event) => {
+      setInputPerson({ ...inputPerson, name: event.target.value });
+    },
+    onNumberChange: (event) => {
+      setInputPerson({ ...inputPerson, number: event.target.value });
+    },
     onSubmit: handleSubmit,
   };
 
@@ -54,8 +76,11 @@ const App = () => {
         value={searchValue}
         onChange={handleSearchChange}
       ></SearchSection>
-      <AddSection formVariables={addSectionVariables}></AddSection>
-      <ListSection persons={shownPersons}></ListSection>
+      <AncSection formVariables={addSectionVariables}></AncSection>
+      <ListSection
+        persons={shownPersons}
+        onDeleteClick={handleDelete}
+      ></ListSection>
     </div>
   );
 };

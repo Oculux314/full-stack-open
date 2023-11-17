@@ -1,9 +1,8 @@
-export const ListSection = ({ persons }) => {
-  const elements = persons.map((person) => (
-    <tr key={person.name}>
-      <td>{person.name}</td>
-      <td>{person.number}</td>
-    </tr>
+import ListItem from "./ListItem";
+
+const ListSection = ({ persons, onDeleteClick }) => {
+  const elements = persons.map(({ id, name, number }) => (
+    <ListItem key={name} name={name} number={number} onClick={onDeleteClick} />
   ));
 
   return (
@@ -21,3 +20,5 @@ export const ListSection = ({ persons }) => {
     </div>
   );
 };
+
+export default ListSection;
