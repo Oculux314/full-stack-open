@@ -1,7 +1,7 @@
 import ListItem from "./ListItem";
 
 const ListSection = ({ persons, onDeleteClick }) => {
-  const elements = persons.map(({ id, name, number }) => (
+  const elements = persons?.map(({ id, name, number }) => (
     <ListItem key={name} name={name} number={number} onClick={onDeleteClick} />
   ));
 
